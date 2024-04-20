@@ -19,9 +19,6 @@ jobs:
 
       - name: Install dependencies
         run: npm install
-     
-      - name: Check for outdated dependencies
-        run: npm outdated
 
       - name: Update dependencies
         run: npm update
