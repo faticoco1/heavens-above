@@ -1,0 +1,27 @@
+name: Scheduled tasks
+
+on:
+  schedule:
+    - cron: '0 3 * * *' # Run daily at 3 AM UTC
+
+jobs:
+  security-updates:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Check for security vulnerabilities
+        run: npm audit --json
+
+      - name: Update dependencies
+        run: npm update
