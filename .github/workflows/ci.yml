@@ -26,4 +26,3 @@ jobs:
 
       - name: Linting with ESLint
         run: npm run lint
-      # Add more steps for linting, code coverage, etc.
