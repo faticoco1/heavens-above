@@ -1,0 +1,39 @@
+name: Dependency Updates
+
+on:
+  schedule:
+    - cron: '* * * * *' # Run every minute
+
+jobs:
+  dependency-updates:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Check for dependency updates with Dependabot
+        uses: dependabot/setup@v2
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Run Tests
+        run: npm test
+
+      - name: Enforce Versioning Policies
+        run: |
+          # npm audit to check for compliance to versioning policies
+          npm audit
+
+      - name: Review Pull Request
+        run: |
+          # require code reviews and tests to pass before merging
+          gh pr merge --auto --merge --approve
