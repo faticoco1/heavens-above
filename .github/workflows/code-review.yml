@@ -21,7 +21,7 @@ jobs:
         run: npm install
 
       - name: Run Super-Linter
-        uses: actions/super-linter@v3
+        uses: github/super-linter@v3
         env:
           DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
