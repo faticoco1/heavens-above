@@ -22,3 +22,10 @@ jobs:
 
       - name: Update dependencies
         run: npm update
+
+       #notification and logging steps
+      - name: Send notifications
+        run: echo "Scheduled tasks completed successfully"
+
+      - name: Save logs
+        run: echo "Logs from scheduled tasks" > scheduled_tasks_logs.txt
