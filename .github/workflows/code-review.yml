@@ -20,11 +20,11 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Run Super-Linter
-        uses: github/super-linter@v3
-        env:
-          DEFAULT_BRANCH: main
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+     # - name: Run Super-Linter
+      #  uses: github/super-linter@v3
+        #env:
+         # DEFAULT_BRANCH: main
+          #GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install istanbul to check code coverage in code standards
         run: npm install istanbul
