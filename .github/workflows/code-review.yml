@@ -34,21 +34,3 @@ jobs:
 
      # - name: Run Snyk security scan
       #  run: npx snyk test --all-projects
-
-      - name: Comment on pull request
-        uses: actions/github-script@v5
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const { data: pullRequest } = await github.rest.pulls.get({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              pull_number: context.issue.number
-            });
-            const comment = 'Code review checks completed. Please review the results.';
-            await github.rest.issues.createComment({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: context.issue.number,
-              body: comment
-            });
