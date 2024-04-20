@@ -2,7 +2,7 @@ name: Scheduled tasks
 
 on:
   schedule:
-    - cron: '* * * * *' # Run daily at 3 AM
+    - cron: '* * * * *'
 
 jobs:
   security-updates:
