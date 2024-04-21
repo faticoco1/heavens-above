@@ -1,0 +1,34 @@
+name: Generate Documentation
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  generate-docs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install JSDoc
+        run: npm install --save-dev jsdoc
+
+      - name: Install JSDoc to Markdown converter
+        run: npm install --save-dev jsdoc-to-markdown
+
+      - name: Install other dependencies (if any)
+        run: npm install
+
+      - name: Create docs folder
+        run: mkdir -p docs
+
+      - name: Generate Markdown documentation
+        run: npx jsdoc-to-markdown -r ./src -d ./docs
