@@ -2,7 +2,7 @@ name: Dependency Updates
 
 on:
   schedule:
-    - cron: '* * * * *' # Run every minute
+    - cron: '3 0 * * *' # Run every minute
 
 jobs:
   dependency-updates:
