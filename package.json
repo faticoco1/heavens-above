@@ -8,7 +8,8 @@
     "start": "node run.js",
     "lint": "eslint .",
     "test": "npm run lint && mocha",
-    "coverage": "istanbul cover _mocha"
+    "coverage": "istanbul cover _mocha",
+    "build-docs": "mkdocs build"
   },
   "dependencies": {
     "cheerio": "^1.0.0-rc.3",
