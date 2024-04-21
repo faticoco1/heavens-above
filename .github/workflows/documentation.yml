@@ -37,6 +37,9 @@ jobs:
           git add .
           git commit -m "Generate documentation"
       
+      - name: Pull changes from main branch
+        run: git pull origin main
+
       - name: Push Changes
         uses: ad-m/github-push-action@master
         with:
