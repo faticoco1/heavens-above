@@ -31,4 +31,4 @@ jobs:
         run: mkdir -p docs
 
       - name: Generate Markdown documentation
-        run: npx jsdoc-to-markdown -r ./src -d ./docs
+        run: npx jsdoc-to-markdown --source ./src -d ./docs
