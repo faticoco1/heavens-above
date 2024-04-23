@@ -31,4 +31,5 @@ jobs:
         run: |
           echo "Logs from scheduled tasks" > scheduled_tasks_logs.txt
           ls -l #listing files in the workspace directory for debugging
+          cat scheduled_tasks_logs.txt
 
