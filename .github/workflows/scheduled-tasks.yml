@@ -31,8 +31,9 @@ jobs:
       # Backup data
       - name: Backup data
         run: |
-          cp -r data backups/
+          cp -r src data/
           echo "Data backup completed successfully"
+          ls data
 
       # Notification and logging steps
       - name: Send notifications
@@ -40,7 +41,7 @@ jobs:
 
       - name: Save logs
         run: |
-          echo "Logs from scheduled tasks" > scheduled_tasks_logs.txt
+          echo "Scheduled maintenance tasks completed successfully" > scheduled_tasks_logs.txt
           ls -l # Listing files in the workspace directory for debugging
           cat scheduled_tasks_logs.txt
 
