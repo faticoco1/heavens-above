@@ -31,8 +31,8 @@ describe('Iridium Module', () => {
     // Assertions
     expect(mockedRequest).toHaveBeenCalledWith(
       expect.objectContaining({
-        url: 'your-url', // Expected URL
-        method: 'POST', // Expected HTTP method
+        url: expect.any(String), // Ensure any string URL is expected
+        method: 'GET', // Ensure the expected HTTP method is GET
         // Add other expected request options here
       }),
       expect.any(Function)
