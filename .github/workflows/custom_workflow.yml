@@ -1,8 +1,9 @@
-name: Generate Release and Release Notes
+name: Generate Release Notes
 
 on:
   push:
-
+    branches:
+      - main
 
 jobs:
   generate-release-notes:
@@ -12,24 +13,18 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Determine Last Release
-        id: last_release
-        run: |
-          echo "::set-output name=tag::$(git describe --tags --abbrev=0)"
-
       - name: Generate Release Notes
         id: release_notes
         run: |
-          LAST_RELEASE_TAG="${{ steps.last_release.outputs.tag }}"
-          git log --pretty=format:"- %s" "${LAST_RELEASE_TAG}..HEAD" > release_notes.txt
-          echo "::set-output name=notes::$(cat release_notes.txt)"
+          git log --pretty=format:"- %s" > release_notes.txt
+          cat release_notes.txt
 
-      - name: Create Release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create or Append to CHANGELOG.md
         run: |
-          tag="${{ steps.last_release.outputs.tag }}"
-          gh release create "$tag" \
-              --repo="$GITHUB_REPOSITORY" \
-              --title="${GITHUB_REPOSITORY#*/} ${tag#v}" \
-              --notes-file="release_notes.txt"
+          if [ -f "CHANGELOG.md" ]; then
+            echo "${{ steps.release_notes.outputs.notes }}" >> CHANGELOG.md
+            cat CHANGELOG.md
+          else
+            echo "${{ steps.release_notes.outputs.notes }}" > CHANGELOG.md
+            cat CHANGELOG.md
+          fi
