@@ -25,6 +25,6 @@ jobs:
             cat release_notes.txt >> CHANGELOG.md
             cat CHANGELOG.md
           else
-            cat release_notes.txt > CHANGELOG.md
+            cat release_notes.txt >> CHANGELOG.md
             cat CHANGELOG.md
           fi
