@@ -22,9 +22,9 @@ jobs:
       - name: Create or Append to CHANGELOG.md
         run: |
           if [ -f "CHANGELOG.md" ]; then
-            echo "${{ steps.release_notes.outputs.notes }}" >> CHANGELOG.md
+            cat release_notes.txt >> CHANGELOG.md
             cat CHANGELOG.md
           else
-            echo "${{ steps.release_notes.outputs.notes }}" > CHANGELOG.md
+            cat release_notes.txt > CHANGELOG.md
             cat CHANGELOG.md
           fi
