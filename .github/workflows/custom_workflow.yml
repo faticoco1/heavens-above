@@ -32,7 +32,9 @@ jobs:
           if [ -f "CHANGELOG.md" ]; then
             # Append release notes to existing CHANGELOG.md
             echo "${{ steps.release_notes.outputs.notes }}" >> CHANGELOG.md
+            cat CHANGELOG.md
           else
             # Create new CHANGELOG.md and add release notes
             echo "${{ steps.release_notes.outputs.notes }}" > CHANGELOG.md
+            cat CHANGELOG.md
           fi
