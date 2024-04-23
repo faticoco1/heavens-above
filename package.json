@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node run.js",
     "lint": "eslint .",
-    "test": "npm run lint && mocha",
+    "test": "jest",
     "coverage": "istanbul cover _mocha",
     "build-docs": "mkdocs build"
   },
