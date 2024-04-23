@@ -2,6 +2,8 @@ name: Generate Release and Release Notes
 
 on:
   push:
+    tags:
+      - '*'
 
 jobs:
   generate-release-notes:
@@ -26,8 +28,8 @@ jobs:
       - name: Create Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          tag: ${{ steps.last_release.outputs.tag }}
         run: |
+          tag="${{ steps.last_release.outputs.tag }}"
           gh release create "$tag" \
               --repo="$GITHUB_REPOSITORY" \
               --title="${GITHUB_REPOSITORY#*/} ${tag#v}" \
