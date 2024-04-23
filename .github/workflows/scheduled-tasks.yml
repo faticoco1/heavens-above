@@ -2,10 +2,10 @@ name: Scheduled tasks
 
 on:
   schedule:
-    - cron: '* * * * *'
+    - cron: '0 0 * * *' # Run daily at midnight
 
 jobs:
-  security-updates:
+  maintenance:
     runs-on: ubuntu-latest
 
     steps:
@@ -23,13 +23,29 @@ jobs:
       - name: Update dependencies
         run: npm update
 
-       #notification and logging steps
+      # Create data directory if it doesn't exist
+      - name: Create data directory
+        run: mkdir -p data
+
+      # Backup data
+      - name: Backup data
+        run: |
+          cp -r data backups/
+          echo "Data backup completed successfully"
+
+      # Notification and logging steps
       - name: Send notifications
-        run: echo "Scheduled tasks completed successfully"
+        run: echo "Scheduled maintenance tasks completed successfully"
 
       - name: Save logs
         run: |
           echo "Logs from scheduled tasks" > scheduled_tasks_logs.txt
-          ls -l #listing files in the workspace directory for debugging
+          ls -l # Listing files in the workspace directory for debugging
           cat scheduled_tasks_logs.txt
 
+      # Upload logs as an artifact
+      - name: Upload logs
+        uses: actions/upload-artifact@v2
+        with:
+          name: scheduled-tasks-logs
+          path: scheduled_tasks_logs.txt
