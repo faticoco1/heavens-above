@@ -1,8 +1,9 @@
 name: Scheduled tasks
 
 on:
-  schedule:
-    - cron: '0 0 * * *' # Run daily at midnight
+  push:
+  #schedule:
+   # - cron: '0 0 * * *' # Run daily at midnight
 
 jobs:
   maintenance:
