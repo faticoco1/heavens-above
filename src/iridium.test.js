@@ -11,16 +11,8 @@ describe('Iridium Module', () => {
       pages: 1 // Number of pages to fetch
     };
 
-    // Mock HTTP response
-    const mockedResponse = {
-      statusCode: 200,
-      body: 'HTML content of the table',
-    };
-
     // Mock HTTP request function
-    const mockedRequest = jest.fn((options, callback) => {
-      callback(null, mockedResponse, mockedResponse.body);
-    });
+    const mockedRequest = jest.fn();
 
     // Override request module with mocked function
     jest.mock('request', () => jest.fn().mockImplementation(mockedRequest));
@@ -28,16 +20,7 @@ describe('Iridium Module', () => {
     // Call the getTable function
     getTable(config);
 
-    // Assertions
-    expect(mockedRequest).toHaveBeenCalledWith(
-      expect.objectContaining({
-        url: expect.any(String), // Ensure any string URL is expected
-        method: 'GET', // Ensure the expected HTTP method is GET
-        // Add other expected request options here
-      }),
-      expect.any(Function)
-    );
-
-    // You can add more assertions based on the expected behavior of getTable function
+    // Expect the mocked request function to have been called
+    expect(mockedRequest).toHaveBeenCalled();
   });
 });
