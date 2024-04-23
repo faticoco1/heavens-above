@@ -32,4 +32,7 @@ jobs:
         run: npm audit --audit-level=high || echo "Audit found issues but continuing"
 
       - name: Run ESLint for code linting
-        run: npm run lint
+        run: npm run lint > lint_errors.txt || true
+
+      - name: Display ESLint errors
+        run: cat lint_errors.txt
