@@ -24,6 +24,7 @@ jobs:
         run: |
           # Example: Generate release notes from commits since the last release
           git log --pretty=format:"- %s" ${LAST_RELEASE_TAG}..HEAD > release_notes.txt
+          cat release_notes.txt  # Output release notes for debugging
           echo "::set-output name=notes::$(cat release_notes.txt)"
 
       - name: Create or Append to CHANGELOG.md
@@ -31,10 +32,12 @@ jobs:
           # Check if CHANGELOG.md exists
           if [ -f "CHANGELOG.md" ]; then
             # Append release notes to existing CHANGELOG.md
-            echo "${{ steps.release_notes.outputs.notes }}" >> CHANGELOG.md
-            cat CHANGELOG.md
+            echo "" >> CHANGELOG.md  # Add empty line before appending
+            cat release_notes.txt >> CHANGELOG.md  # Append release notes
+            echo "Release notes appended to CHANGELOG.md"
           else
             # Create new CHANGELOG.md and add release notes
-            echo "${{ steps.release_notes.outputs.notes }}" > CHANGELOG.md
-            cat CHANGELOG.md
+            echo "" > CHANGELOG.md  # Create new CHANGELOG.md
+            cat release_notes.txt > CHANGELOG.md  # Add release notes
+            echo "New CHANGELOG.md created with release notes"
           fi
