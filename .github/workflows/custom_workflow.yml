@@ -1,0 +1,38 @@
+name: Generate Release Notes
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  generate-release-notes:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Determine Last Release
+        id: last_release
+        run: |
+          # Example: Get the last release tag
+          echo "::set-output name=tag::v1.0.0"
+
+      - name: Generate Release Notes
+        id: release_notes
+        run: |
+          # Example: Generate release notes from commits since the last release
+          git log --pretty=format:"- %s" ${LAST_RELEASE_TAG}..HEAD > release_notes.txt
+          echo "::set-output name=notes::$(cat release_notes.txt)"
+
+      - name: Create or Append to CHANGELOG.md
+        run: |
+          # Check if CHANGELOG.md exists
+          if [ -f "CHANGELOG.md" ]; then
+            # Append release notes to existing CHANGELOG.md
+            echo "${{ steps.release_notes.outputs.notes }}" >> CHANGELOG.md
+          else
+            # Create new CHANGELOG.md and add release notes
+            echo "${{ steps.release_notes.outputs.notes }}" > CHANGELOG.md
+          fi
