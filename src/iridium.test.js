@@ -1,7 +1,7 @@
 // Import the module to be tested
 const { getTable } = require('./satellite');
 
-describe('Iridium Module', () => {
+describe('satellite Module', () => {
   test('getTable function retrieves table data from URL', () => {
     // Mock configuration object for getTable function
     const config = {
