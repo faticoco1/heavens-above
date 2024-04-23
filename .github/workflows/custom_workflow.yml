@@ -2,8 +2,7 @@ name: Generate Release and Release Notes
 
 on:
   push:
-    tags:
-      - '*'
+
 
 jobs:
   generate-release-notes:
