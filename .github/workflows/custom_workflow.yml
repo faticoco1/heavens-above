@@ -1,9 +1,9 @@
-name: Generate Release Notes
+name: Generate Release and Release Notes
 
 on:
   push:
-    branches:
-      - main
+    tags:
+      - '*'
 
 jobs:
   generate-release-notes:
@@ -16,28 +16,21 @@ jobs:
       - name: Determine Last Release
         id: last_release
         run: |
-          # Example: Get the last release tag
-          echo "::set-output name=tag::v1.0.0"
+          echo "::set-output name=tag::$(git describe --tags --abbrev=0)"
 
       - name: Generate Release Notes
         id: release_notes
         run: |
-          # Example: Generate release notes from commits since the last release
-          git log --pretty=format:"- %s" ${LAST_RELEASE_TAG}..HEAD > release_notes.txt
-          cat release_notes.txt  # Output release notes for debugging
+          LAST_RELEASE_TAG="${{ steps.last_release.outputs.tag }}"
+          git log --pretty=format:"- %s" "${LAST_RELEASE_TAG}..HEAD" > release_notes.txt
           echo "::set-output name=notes::$(cat release_notes.txt)"
 
-      - name: Create or Append to CHANGELOG.md
+      - name: Create Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ steps.last_release.outputs.tag }}
         run: |
-          # Check if CHANGELOG.md exists
-          if [ -f "CHANGELOG.md" ]; then
-            # Append release notes to existing CHANGELOG.md
-            echo "" >> CHANGELOG.md  # Add empty line before appending
-            cat release_notes.txt >> CHANGELOG.md  # Append release notes
-            echo "Release notes appended to CHANGELOG.md"
-          else
-            # Create new CHANGELOG.md and add release notes
-            echo "" > CHANGELOG.md  # Create new CHANGELOG.md
-            cat release_notes.txt > CHANGELOG.md  # Add release notes
-            echo "New CHANGELOG.md created with release notes"
-          fi
+          gh release create "$tag" \
+              --repo="$GITHUB_REPOSITORY" \
+              --title="${GITHUB_REPOSITORY#*/} ${tag#v}" \
+              --notes-file="release_notes.txt"
