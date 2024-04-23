@@ -23,3 +23,9 @@ jobs:
 
       - name: Run tests
         run: npm test
+        
+      - name: Run ESLint for code linting
+        run: npm run lint > lint_errors.txt || true
+
+      - name: Display ESLint errors
+        run: cat lint_errors.txt
