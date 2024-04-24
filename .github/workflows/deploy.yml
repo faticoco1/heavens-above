@@ -12,6 +12,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+
       - name: Build Docker image
         run: docker build -t myapp .
 
@@ -20,3 +25,6 @@ jobs:
         with:
           publish-dir: './src' 
           github-token: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+
+      - name: Echo Deployment Status
+        run: echo "Deployment to Netlify completed successfully"
