@@ -15,9 +15,6 @@ jobs:
       - name: Build Docker image
         run: docker build -t myapp .
 
-      - name: Login to Netlify
-        run: netlify login
-
       - name: Deploying to Netlify
         uses: nwtgck/actions-netlify@v1
         with:
