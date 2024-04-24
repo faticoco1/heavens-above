@@ -12,13 +12,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Install Netlify CLI
-        run: npm install netlify-cli -g
+      - name: Build Docker image
+        run: docker build -t myapp .
 
       - name: Login to Netlify
         run: netlify login
 
-      - name: Deploy to Netlify
-        env:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-        run: netlify deploy --prod
+      - name: Deploying to Netlify
+        uses: nwtgck/actions-netlify@v1
+        with:
+          publish-dir: './src' 
+          github-token: ${{ secrets.NETLIFY_AUTH_TOKEN }}
