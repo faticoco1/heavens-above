@@ -1,8 +1,9 @@
 name: Code Review Workflow
 
 on:
-  push:
-    branches: [ main ]
+  pull_request:
+  #push:
+   # branches: [ main ]
 
 jobs:
   code-review:
